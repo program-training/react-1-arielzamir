@@ -1,11 +1,12 @@
-import "./App.css";
-import { Example } from "./components/Example/Example";
+import Text from "./components/Text/Text";
+import Card from "./components/Card/Card";
 
-function App() {
+function App(): JSX.Element {
   return (
-    <>
-      <Example />{" "}
-    </>
+    <div>
+      <Text />
+      <Card />
+    </div>
   );
 }
 
