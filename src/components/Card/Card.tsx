@@ -1,23 +1,51 @@
+import { useState } from "react";
 import "./Card.css";
-export default function Card(): JSX.Element {
+import { dataProps } from "./data";
+
+export default function Card({
+  title,
+  imageUrl,
+  text,
+}: dataProps): JSX.Element {
+  const [backgroundColor, setBackgroundColor] = useState<string>("white");
+  const [customColor, setCustomColor] = useState<string>("");
+
   const handleColorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const card = document.getElementById("card");
-    if (card) {
-      card.style.backgroundColor = event.target.value;
-    }
+    setBackgroundColor(event.target.value);
+  };
+
+  const handleCustomColorChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCustomColor(event.target.value);
+  };
+
+  const addColorToCard = () => {
+    setBackgroundColor(customColor);
+    setCustomColor("");
   };
 
   return (
-    <div id="card">
-      <h2>Card Title</h2>
-      <img src="https://did.li/ue0fT" alt="sea" />
-      <p>This is the card's content.</p>
-      <select onChange={handleColorChange}>
-        <option value="white">White</option>
-        <option value="lightblue">Light Blue</option>
-        <option value="lightgreen">Light Green</option>
-        <option value="lightpink">Light Pink</option>
+    <div className="card" style={{ backgroundColor }}>
+      <h2>{title}</h2>
+      <img src={imageUrl} className="cardImage" alt={title} />
+      <p>{text}</p>
+
+      <select value={backgroundColor} onChange={handleColorChange}>
+        <option value="red">Red</option>
+        <option value="black">Black</option>
+        <option value="yellow">Yellow</option>
+        {customColor.trim() !== "" && (
+          <option value={customColor}>{customColor}</option>
+        )}
       </select>
+      <input
+        type="text"
+        value={customColor}
+        onChange={handleCustomColorChange}
+        placeholder="Enter custom color"
+      />
+      <button onClick={addColorToCard}>Add Color</button>
     </div>
   );
 }
